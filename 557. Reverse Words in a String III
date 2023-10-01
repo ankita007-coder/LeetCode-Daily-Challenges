@@ -1,0 +1,21 @@
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        # st=[]
+        # li = s.split(' ')
+        # for i in li:
+        #     i = i[::-1]
+        #     st.append(i)
+        # return ' '.join(st)
+        st = ""
+        ans = ""
+        for i in range(len(s)):
+            ch = s[i]
+            st = st+ch
+            if ch==" ":
+                st = st[::-1]
+                ans = ans+st
+                st =""
+        if i == len(s)-1:
+            st=st[::-1]
+            ans = ans+" "+st
+        return ans.lstrip()
