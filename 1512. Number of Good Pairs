@@ -1,0 +1,17 @@
+#Day 3
+
+class Solution:
+    def numIdenticalPairs(self, nums: List[int]) -> int:
+        # frq = [0]*101
+        # count  = 0
+        # for i in nums:
+        #     count += frq[i]
+        #     frq[i]+=1
+        # return count
+        d = {}
+        count = 0
+        for i in nums:
+            count += d.get(i,0)
+            d[i] = d.get(i,0)+1
+        return count
+        
