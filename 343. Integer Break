@@ -1,0 +1,55 @@
+#recursion
+class Solution:
+    def helper(self,ind,target):
+        if ind==1:
+            return 1
+        notpick = self.helper(ind-1,target)
+        pick = 0
+        if target>=ind:
+            pick = ind* self.helper(ind,target-ind)
+        return max(pick,notpick)
+
+
+    def integerBreak(self, n: int) -> int:
+        return self.helper(n-1,n)
+
+
+#memoization
+class Solution:
+    def helper(self,ind,target,dp):
+        if ind==1:
+            return 1
+        if dp[ind][target]!=-1:
+            return dp[ind][target]
+        notpick = self.helper(ind-1,target,dp)
+        pick = 0
+        if target>=ind:
+            pick = ind* self.helper(ind,target-ind,dp)
+        dp[ind][target] = max(pick,notpick)
+        return dp[ind][target]
+
+
+    def integerBreak(self, n: int) -> int:
+        dp = [[-1 for j in range(n+1)] for i in range(n)]
+        return self.helper(n-1,n,dp)
+
+#tabulation
+class Solution:
+    def helper(self,n,dp):
+        for i in range(n+1):
+            dp[1][i]=1
+        for i in range(2,n):
+            for j in range(n+1):
+                notpick = dp[i-1][j]
+                pick = 0
+                if j>=i:
+                    pick = i* dp[i][j-i]
+                dp[i][j] = max(pick,notpick)
+        return dp[n-1][n]
+    def integerBreak(self, n: int) -> int:
+        #tabulation
+        dp = [[-1]*(n+1)]*(n)
+        return self.helper(n,dp)
+
+
+
