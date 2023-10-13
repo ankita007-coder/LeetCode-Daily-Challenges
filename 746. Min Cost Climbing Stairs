@@ -1,0 +1,44 @@
+class Solution:
+    # def minCostClimbingStairs(self, cost: List[int]) -> int:
+    #     n = len(cost)
+    #     dp = [-1]*(n+1)
+    #     return min(self.helper(cost,n-1,dp),self.helper(cost,n-2,dp))
+
+    #recursion
+    # def helper(self,cost,n):
+    #     if n==0 or n==1:
+    #         return cost[n]
+    #     onestep = cost[n]+self.helper(cost,n-1)
+    #     twostep = cost[n]+ self.helper(cost,n-2)
+    #     return min(onestep,twostep)
+
+    #memoization
+    # def helper(self,cost,n,dp):
+    #     if n==0 or n==1:
+    #         return cost[n]
+    #     if dp[n]!=-1:
+    #         return dp[n]
+    #     onestep = cost[n]+self.helper(cost,n-1,dp)
+    #     twostep = cost[n]+ self.helper(cost,n-2,dp)
+    #     dp[n]= min(onestep,twostep)
+    #     return dp[n]
+
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        #tabulation
+        # n =len(cost)
+        # dp = [0]*(n+1)
+        # dp[0]=cost[0]
+        # dp[1]= cost[1]
+        # for i in range(2,n):
+        #     dp[i] = min(cost[i]+dp[i-1],cost[i]+dp[i-2])
+        # return min(dp[n-1],dp[n-2])
+
+        #space optimization
+        prev, curr = cost[0],cost[1]
+        if len(cost)<=2:
+            return min(prev,curr)
+        for i in range(2,len(cost)):
+            minCost = min(cost[i]+prev,cost[i]+curr)
+            prev = curr
+            curr = minCost
+        return min(prev,curr)
