@@ -1,0 +1,57 @@
+# Code
+```
+class Solution:
+    #recursion
+    def helper(self,ind,work,cost,time):
+        if work<=0:
+            return 0
+        if ind==-1:
+            return 1e9
+        return min(cost[ind]+self.helper(ind-1,work-time[ind]-1,cost,time),self.helper(ind-1,work,cost,time))
+
+
+    
+    def paintWalls(self, cost: List[int], time: List[int]) -> int:
+        n = len(cost)
+        return self.helper(n-1,n,cost,time,dp)
+      
+```
+# Memoization
+
+  ```
+  #memoization
+    def helper(self,ind,work,cost,time,dp):
+        if work<=0:
+            return 0
+        if ind==-1:
+            return 1e9
+        if dp[ind][work]!=-1:
+            return dp[ind][work]
+        dp[ind][work]= min(cost[ind]+self.helper(ind-1,work-time[ind]-1,cost,time,dp),self.helper(ind-1,work,cost,time,dp))
+        return dp[ind][work]
+    
+        def paintWalls(self, cost: List[int], time: List[int]) -> int:
+        n = len(cost)
+        dp = [[-1 for _ in range(n + 1)] for _ in range(n + 1)]
+        return self.helper(n-1,n,cost,time,dp)
+```
+
+# Tabulation
+
+```
+ def paintWalls(self, cost: List[int], time: List[int]) -> int:
+       
+        #tabulation
+        n = len(cost)
+        dp = [[0 for _ in range(n + 1)] for _ in range(n + 1)]
+        for i in range(1,n+1):
+            dp[0][i]=1e9
+
+        for i in range(1,n+1):
+            for j in range(1,n+1):
+                notpick = dp[i-1][j]
+                pick = cost[i-1]+dp[i-1][max(0,j-time[i-1]-1)]
+                dp[i][j] = min(pick,notpick)
+        return dp[n][n]
+```
+        
