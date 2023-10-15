@@ -16,8 +16,26 @@ class Solution:
 
 
         return ways
+    #memoization
+     def helper(self,step, position,arrLen,dp):
+        mod = 10**9+7
+        if position <0 or position>=arrLen:
+            return 0
+        if step == 0:
+            return 1 if position == 0 else 0
 
+        if dp[step][position]!=-1:
+            return dp[step][position]
+        # Calculate the number of ways recursively
+        ways = 0
         
+        ways = (ways+self.helper(step - 1, position - 1,arrLen,dp))%mod
+        ways = (ways+self.helper(step - 1, position,arrLen,dp))%mod
+        ways = (ways+self.helper(step - 1, position + 1,arrLen,dp))%mod
+
+        dp[step][position] =ways
+
+        return dp[step][position]    
 
     def numWays(self, steps: int, arrLen: int) -> int:
         return self.helper(steps,0,arrLen)
