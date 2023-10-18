@@ -1,0 +1,90 @@
+# Approach
+<!-- Describe your approach to solving the problem. -->
+
+To solve this problem, we'll use a dynamic programming approach along with depth-first search (DFS) to calculate the minimum time required for each course. Here's the step-by-step explanation:
+
+**1. Create a Directed Graph:**
+   - First, create a directed graph to represent the prerequisite relationships between courses. You can use a dictionary or an adjacency list to store this information.
+   - For example, if you have a list of relations like `[[2, 1], [3, 1], [1, 4]]`, it means that course 2 and 3 are prerequisites for course 1, and course 1 is a prerequisite for course 4.
+
+**2. Initialize Data Structures:**
+   - Initialize an array `pre` to keep track of the number of prerequisites for each course. Initialize it with zeros.
+   - Create a list `dp` to store the minimum time required to complete each course. Initialize it with zeros.
+
+**3. Implement a DFS Function:**
+   - Create a helper function called `dfs(course)` that calculates the time required to complete a specific course. This function will be a recursive DFS.
+
+**4. Calculate Time for Each Course:**
+   - Iterate through the list of courses (from 1 to n) and check if a course has no prerequisites (i.e., `pre[course] == 0`). If it has no prerequisites, call the `dfs(course)` function to compute the time required to complete it.
+
+**5. DFS Function Explanation:**
+   - Inside the `dfs(course)` function, check if the time for the course has already been calculated (i.e., `dp[course] > 0`). If it has, return the calculated time.
+   - Otherwise, find the maximum time required among the courses that depend on the current course. To do this, iterate through the courses in the graph that depend on the current course.
+   - Recursively call `dfs(next_course)` to calculate the time for the dependent courses.
+   - Update the `dp[course]` with the maximum time required among the dependent courses, plus the time required for the current course (from the `time` list).
+
+**6. Calculate Maximum Time:**
+   - After calculating the time for all courses, the answer will be the maximum value in the `dp` array, as it represents the minimum time needed to complete all courses.
+
+**7. Return the Result:**
+   - Return the maximum value from the `dp` array as the minimum number of months needed to complete all courses with prerequisites.
+
+
+# Complexity
+- Time complexity:
+<!-- Add your time complexity here, e.g. $$O(n)$$ -->
+The time complexity of the provided solution is O(N), where N is the number of courses.
+
+1. Constructing the Directed Graph: Constructing the directed graph to represent the prerequisite relationships requires iterating through the list of relations, which has a time complexity of O(E), where E is the number of relations.
+
+2. Depth-First Search (DFS): The depth-first search algorithm, implemented in the `dfs` function, visits each course exactly once. In the worst case, each course and its prerequisites are visited, which takes O(N) time.
+
+3. Overall Time Complexity: Combining the time complexity of constructing the graph and performing DFS, the overall time complexity is O(N + E). However, in practice, the number of relations (E) is often less than or equal to the number of courses (N), so the time complexity can be simplified to O(N).
+
+Therefore, the time complexity of this solution is linear with respect to the number of courses. It is an efficient algorithm for solving this problem.
+- Space complexity:
+<!-- Add your space complexity here, e.g. $$O(n)$$ -->
+The space complexity of the provided solution is O(N), where N is the number of courses. Here's how the space complexity breaks down:
+
+1. **Graph Representation:** We use a data structure, often a dictionary or an adjacency list, to represent the directed graph of course prerequisites. The space required for this data structure is proportional to the number of edges (prerequisite relations). In the worst case, where there is one prerequisite for each course, this space complexity can be O(N). However, in practice, it is usually less than N.
+
+2. *Prerequisites Array (`pre`):** We use an array to store the Prerequisites of each course. Since there is one entry for each course, the space complexity of this array is O(N).
+
+3. **DP Array (`dp`):** We use an array to store the minimum time required for each course. Similar to the in-degree array, the space complexity of this array is O(N).
+
+4. **Call Stack (DFS):** The DFS algorithm used in the `dfs` function relies on the call stack to keep track of function calls and recursive calls. The maximum depth of the call stack can be at most N, where N is the number of courses, in the worst case when all courses depend on each other.
+
+Summing up the space complexities of these components, the overall space complexity of the solution is O(N). It's a linear space complexity with respect to the number of courses and is typically efficient for practical scenarios.
+# Code
+```
+from collections import defaultdict
+class Solution:
+    def minimumTime(self, n: int, relations: List[List[int]], time: List[int]) -> int:
+        graph = defaultdict(list)
+        pre = [0] * (n + 1) # to store prerequisites
+        
+        for prev, next_course in relations:
+            graph[prev].append(next_course)
+            pre[next_course] += 1
+
+        dp = [0] * (n + 1) #to store calculated time
+
+        def dfs(course):
+            if dp[course]>0:
+                return dp[course]
+
+            max_time = 0
+            for next_course in graph[course]:
+                max_time = max(max_time,dfs(next_course))
+            dp[course] = max_time+time[course-1]
+            return dp[course]
+        for i in range(1,n+1):
+            if pre[i]==0:
+                dfs(i)
+
+        return max(dp)
+   
+```
+
+
+
