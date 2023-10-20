@@ -1,4 +1,54 @@
-#recursive code
+# Intuition
+The problem involves iterating through a nested structure and flattening it, so you can easily return integers one by one when calling the next method. The intuition is that you need to come up with a way to flatten the nested structure while efficiently checking for the next integer value.
+
+# Approach
+
+We want to create a flattened list of integers from the nested structure. The flattening process can be achieved using a recursive function or a stack.
+
+In the recursive approach (the first code snippet), the flatten method is used to process each element in the nestedList. If an element is an integer, we add it to the result list. If it's a list, we call the flatten method recursively to process its elements. This way, we build a flattened list.
+
+In the stack-based approach (the second code snippet), we use a stack to help with flattening. The stack starts with the entire nestedList reversed. We use the stack to efficiently pop and process elements. When we pop an element from the stack, if it's an integer, we return it. If it's a list, we reverse it and add its elements back to the stack. This ensures that we process elements in the correct order.
+
+You can also watch out this video for easy understanding. Hope it helps you.
+
+
+Please subscribe to my channel if it helped you.
+https://www.youtube.com/channel/UCsu5CDZmlHcpH7dQozZWtQw?sub_confirmation=1
+
+# Complexity
+Let's break down the space complexity (SC) and time complexity (TC) for both approaches separately:
+
+**Recursive Approach:**
+
+- Space Complexity (SC):
+  - The space complexity for this approach is primarily determined by the space used for the recursive call stack.
+  - In the worst case, the depth of the recursive call stack is equal to the maximum nesting level in the `nestedList`. Each recursive call consumes space on the stack.
+  - If the maximum nesting level is "D," the space complexity for the call stack is O(D).
+  - Additionally, the `result` list is used to store the flattened elements, which can have a space complexity of O(N), where N is the total number of elements.
+  - Therefore, the overall space complexity is O(D + N), where D is the depth of the recursion, and N is the total number of elements.
+
+- Time Complexity (TC):
+  - The time complexity is determined by the number of elements in the `nestedList` that need to be processed.
+  - In the worst case, every element needs to be visited once, so the time complexity is O(N), where N is the total number of elements.
+
+**Stack-Based Approach:**
+
+- Space Complexity (SC):
+  - The primary space complexity factor in the stack-based approach is the `stack` used to keep track of elements.
+  - In the worst case, the `stack` may contain all elements in the nested structure, including both integers and lists, but reversed.
+  - The space complexity for the `stack` can be O(N), where N is the total number of elements.
+  - Additionally, some temporary variables are used for processing, which require only a constant amount of space.
+  - Therefore, the overall space complexity is O(N).
+
+- Time Complexity (TC):
+  - The time complexity depends on the number of elements processed.
+  - In the worst case, every element needs to be visited once, and the elements are processed efficiently using the stack.
+  - Thus, the time complexity is O(N), where N is the total number of elements.
+
+In summary, both approaches have similar time complexities of O(N), as they need to process each element in the nested structure once. However, the recursive approach has a space complexity of O(D + N), where D is the depth of recursion, while the stack-based approach has a space complexity of O(N). The stack-based approach is more memory-efficient when working with large nested structures.
+
+# Code
+```
 class NestedIterator:
     def __init__(self, nestedList: [NestedInteger]):
         self.flattened = self.flatten(nestedList)
@@ -22,8 +72,10 @@ class NestedIterator:
 # Your NestedIterator object will be instantiated and called as such:
 # i, v = NestedIterator(nestedList), []
 # while i.hasNext(): v.append(i.next())
+```
+# Stack Code
 
-#Stack Code
+```
 class NestedIterator:
     def __init__(self, nestedList: [NestedInteger]):
         self.stack = nestedList[::-1]
@@ -42,3 +94,5 @@ class NestedIterator:
 # i, v = NestedIterator(nestedList), []
 # while i.hasNext(): v.append(i.next())
 ```
+
+Please upvote if you my solution helped you out.
