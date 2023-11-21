@@ -1,0 +1,38 @@
+class Solution:
+    # def rev(self,num):
+    #     st = str(num)
+    #     st = st[::-1]
+    #     return int(st)
+    # def countNicePairs(self, nums: List[int]) -> int:
+    #     n = len(nums)
+    #     s=0
+    #     mod = 10**9+7
+    #     for i in range(n):
+    #         for j in range(i+1,n):
+    #             if (nums[i]+ self.rev(nums[j]))==(nums[j]+ self.rev(nums[i])):
+    #                 s+=1
+    #     return s%mod
+
+    def countNicePairs(self,nums):
+        mod = 10**9 + 7
+
+        # Function to reverse a non-negative integer
+        def reverse_num(x):
+            rev = 0
+            while x > 0:
+                rev = rev * 10 + x % 10
+                x //= 10
+            return rev
+
+        # Count the occurrences of the differences between nums[i] and rev(nums[i])
+        count_map = {}
+        for num in nums:
+            diff = num - reverse_num(num)
+            count_map[diff] = count_map.get(diff, 0) + 1
+
+        nice_pairs = 0
+        for count in count_map.values():
+            # For each difference, if there are k occurrences, there are k * (k-1) / 2 nice pairs
+            nice_pairs = (nice_pairs + count * (count - 1) // 2) % mod
+
+        return nice_pairs
