@@ -1,0 +1,20 @@
+class Solution:
+    def findDiagonalOrder(self, nums: List[List[int]]) -> List[int]:
+        if not nums or not nums[0]:
+            return []
+        diagonal = []
+        for i in range(len(nums)):
+            row = nums[i]
+            for j in range(len(row)):
+                idx = i+j
+                num = row[j]
+
+                if len(diagonal)<idx+1:
+                    diagonal.append([])
+                diagonal[idx].append(num)
+        #flatten
+        # for sublist in diagonal:
+        #     for num in sublist[::-1]:
+        #         result.append(num)
+        result = [num for sublist in diagonal for num in sublist[::-1]]
+        return result
