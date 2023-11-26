@@ -1,0 +1,23 @@
+class Solution:
+    def largestSubmatrix(self, matrix: List[List[int]]) -> int:
+      
+        if not matrix or not matrix[0]:
+            return 0
+
+        m, n = len(matrix), len(matrix[0])
+        height = [0] * n
+        max_area = 0
+
+        for i in range(m):
+            for j in range(n):
+                # Calculate the height of consecutive 1's ending at each cell
+                height[j] = height[j] + 1 if matrix[i][j] == 1 else 0
+
+            # Sort the heights in non-decreasing order
+            sorted_heights = sorted(height)
+
+            # Calculate the area of the largest rectangle
+            for j in range(n):
+                max_area = max(max_area, sorted_heights[j] * (n - j))
+
+        return max_area
