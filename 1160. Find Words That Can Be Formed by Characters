@@ -1,0 +1,27 @@
+class Solution:
+    def countCharacters(self, words, chars):
+        chars_arr = [0]*26
+        # Step 1: Initialize Character Counts Array
+        for ch in chars:
+            chars_arr[ord(ch)-ord('a')]+=1
+
+        res=0
+
+        # Step 3: Check Words
+        for i in words:
+            if ()
+        # Step 4: Calculate Lengths
+                
+
+    
+
+        # Step 2: Update Counts Array
+        def isTrue(self,word,chars_arr):
+            c = [0]*26
+            for ch in word:
+                x = ord(ch)-ord('a')
+                c[x]+=1
+                if c[x]>chars_arr[x]:
+                    return False
+            return True
+
