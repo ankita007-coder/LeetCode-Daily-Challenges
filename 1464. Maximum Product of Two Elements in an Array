@@ -1,0 +1,21 @@
+#optimised
+
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        n = len(nums)
+        maxi = -1
+        second = -1
+        for i in range(n):
+            if nums[i]>maxi:
+                second = maxi
+                maxi = nums[i]
+            elif nums[i]>second:
+                second = nums[i]
+        return ((maxi-1)*(second-1))
+
+#brute
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        n = len(nums)
+        nums.sort()
+        return ((nums[n-1]-1)*(nums[n-2]-1))
