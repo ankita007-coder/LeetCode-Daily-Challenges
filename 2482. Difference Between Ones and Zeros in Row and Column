@@ -1,0 +1,17 @@
+class Solution:
+    def onesMinusZeros(self, grid: List[List[int]]) -> List[List[int]]:
+        n, m = len(grid), len(grid[0])
+        
+        # Count the number of ones in each row and each column
+        onesRow = [0] * n
+        onesCol = [0] * m
+        
+        diff = [[0]*m for i in range(n)]
+        for i in range(n):
+            for j in range(m):
+                onesRow[i] += grid[i][j]
+                onesCol[j] += grid[i][j]
+        for i in range(n):
+            for j in range(m):
+                diff[i][j] = (onesRow[i]+onesCol[j])-(n-onesRow[i])-(m-onesCol[j])
+        return diff
