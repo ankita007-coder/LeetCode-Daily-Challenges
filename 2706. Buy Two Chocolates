@@ -1,0 +1,24 @@
+#optimal
+
+class Solution:
+    def buyChoco(self, prices: List[int], money: int) -> int:
+        mini1,mini2 = float('inf'),float('inf')
+        for price in prices:
+            if price<mini1:
+                mini2,mini1 = mini1,price
+            elif mini2>price:
+                mini2=price
+
+        if(money-(mini1+mini2)>=0):
+            return money-(mini1+mini2)
+        else:
+            return money
+
+#better
+class Solution:
+    def buyChoco(self, prices, money):
+        prices.sort()
+        if(money - (prices[0] + prices[1])>=0):
+            return money - (prices[0] + prices[1])
+        else:
+            return money
